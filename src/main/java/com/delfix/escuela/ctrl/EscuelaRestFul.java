@@ -41,8 +41,9 @@ public class EscuelaRestFul {
     public ResponseEntity<Map<String,String>> putCalificacion(
         @Valid @RequestBody CalificacionDTO calificacionDTO,
         BindingResult result ) {
+        Map<String, String> response;
         if(result.hasErrors()) {
-			Map<String, String> response = new HashMap<>();
+			response = new HashMap<>();
 			List<String> errors = result.getFieldErrors()
 					.stream()
 					.map(err -> "El campo '" + err.getField() +"' "+ err.getDefaultMessage())
@@ -56,9 +57,7 @@ public class EscuelaRestFul {
                             "calificacion acrualizada", "No se encontro la calificación");
         } catch (NumberFormatException e) {
             System.err.println(e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-                    Constants.SUCCESS_RESPONSE, "error",
-                    Constants.MSG_RESPONSE, "La informacion proporcinada no es la requerida"));
+            return this.reponseAPI(false, null, "La informacion proporcinada no es la requerida");
         }
     }
    
@@ -87,14 +86,15 @@ public class EscuelaRestFul {
 
 
     private ResponseEntity<Map<String, String>> reponseAPI(boolean result, String msgOk, String msgErr){
+        Map<String, String> response = new HashMap<>();
         if(result){
-            return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-                        Constants.SUCCESS_RESPONSE , "ok",
-                        Constants.MSG_RESPONSE, msgOk));
+            response.put( Constants.SUCCESS_RESPONSE , "ok");
+            response.put(Constants.MSG_RESPONSE, msgOk);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-                        Constants.SUCCESS_RESPONSE, "error",
-                        Constants.MSG_RESPONSE, msgErr));
+                response.put(Constants.SUCCESS_RESPONSE, "error");
+                response.put( Constants.MSG_RESPONSE, msgErr);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
     }
 }

@@ -7,7 +7,7 @@ plugins {
 
 group = 'com.delfix'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '8'
 
 configurations {
 	compileOnly {
@@ -27,8 +27,8 @@ dependencies {
 	implementation 'org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE'
 	implementation 'org.springframework.security:spring-security-jwt:1.0.9.RELEASE'
 	
-	implementation 'javax.xml.bind:jaxb-api'
-	implementation 'org.glassfish.jaxb:jaxb-runtime'
+	//implementation 'javax.xml.bind:jaxb-api'
+	//implementation 'org.glassfish.jaxb:jaxb-runtime'
 
 	compileOnly 'org.projectlombok:lombok'
 	//runtimeOnly 'mysql:mysql-connector-java'
